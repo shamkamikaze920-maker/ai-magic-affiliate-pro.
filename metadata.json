@@ -1,0 +1,7 @@
+{
+  "name": "AI Magic Affiliate Pro",
+  "description": "Professional AI-powered photoshoot studio for affiliate marketers and e-commerce, creating luxury product visuals without real studios or models.",
+  "requestFramePermissions": [
+    "camera"
+  ]
+}
