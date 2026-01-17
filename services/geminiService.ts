@@ -2,7 +2,7 @@
 import { GoogleGenAI } from "@google/genai";
 import { AppState } from "../types";
 
-export const generateMagicImage = async (state: AppState): Promise<string[]> => {
+export const generateMagicImage = async (state: AppState, isPremium: boolean = false): Promise<string[]> => {
   const ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
   
   const modelName = 'gemini-2.5-flash-image';
@@ -71,7 +71,9 @@ export const generateMagicImage = async (state: AppState): Promise<string[]> => 
     throw new Error("No image data returned from AI");
   };
 
-  // Generate 2 variations as requested
-  const [img1, img2] = await Promise.all([generateOne(), generateOne()]);
-  return [img1, img2];
+  // Determine variation count: 1 for free, 4 for premium
+  const variationCount = isPremium ? 4 : 1;
+  const generationPromises = Array.from({ length: variationCount }, () => generateOne());
+  
+  return Promise.all(generationPromises);
 };
